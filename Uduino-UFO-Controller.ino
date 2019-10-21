@@ -3,6 +3,7 @@
 //these pins can not be changed 2/3 are special pins
 int encoderPin1 = 2;
 int encoderPin2 = 3;
+int buttonPin1 = 7;
 uint8_t startIndex = 0;
 volatile int lastEncoded = 0;
 volatile long encoderValue = 0;
@@ -38,9 +39,7 @@ extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
 #include<Uduino.h>
 Uduino uduino("uduinoBoard"); // Declare and name your object
 
-// Servo
-#include <Servo.h>
-#define MAXSERVOS 8
+
 int counter = 0;
 int maxNumb = 3000;
 bool bounce = false;
@@ -52,15 +51,11 @@ void setup()
   FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
   FastLED.setBrightness(  BRIGHTNESS );
 
-  //currentPalette = CloudColors_p;  
-  currentPalette = myRedWhiteBluePalette_p;
-  SetupBlackAndWhiteStripedPalette();
-   // currentBlending = LINEARBLEND;
-  
   Serial.begin(9600);
   
-  pinMode(encoderPin1, INPUT); 
+  pinMode(encoderPin1, INPUT);
   pinMode(encoderPin2, INPUT);
+  pinMode(buttonPin1, INPUT_PULLUP);
 
   digitalWrite(encoderPin1, HIGH); //turn pullup resistor on
   digitalWrite(encoderPin2, HIGH); //turn pullup resistor on
