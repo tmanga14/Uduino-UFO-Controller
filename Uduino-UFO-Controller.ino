@@ -1,4 +1,7 @@
 #include <FastLED.h>
+// Uduino Default Board
+#include<Uduino.h>
+Uduino uduino("uduinoBoard"); // Declare and name your object
 
 //these pins can not be changed 2/3 are special pins
 int encoderPin1 = 2;
@@ -35,11 +38,11 @@ TBlendType    currentBlending;
 extern CRGBPalette16 myRedWhiteBluePalette;
 extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
 
-// Uduino Default Board
-#include<Uduino.h>
-Uduino uduino("uduinoBoard"); // Declare and name your object
 
 
+// Servo
+#include <Servo.h>
+#define MAXSERVOS 8
 int counter = 0;
 int maxNumb = 3000;
 bool bounce = false;
@@ -207,11 +210,6 @@ void BundleReadPin() {
 
 void loop()
 {
-
-    //ChangePalettePeriodically();
-    
-
-    
     float encoderDif = lastEncoderValue - encoderValue;
     
     if (encoderDif < 0 && abs(lightMomentum)< speedCap){
@@ -235,14 +233,15 @@ void loop()
     
     //startIndex = startIndex + ((lastEncoderValue - encoderValue)); /* motion speed */
     lastEncoderValue = encoderValue;
-    Serial.println(quadwave8(encoderValue));
+    //Serial.println(quadwave8(encoderValue));
     //Serial.println("encoderVal" + encoderValue);
     //FillLEDsFromPaletteColors( startIndex);
+    uduino.update();
     UpdateSine();
     
     FastLED.show();
     FastLED.delay(1000 / UPDATES_PER_SECOND);
-  uduino.update();
+  
   
   if(uduino.isConnected()){
   Serial.println(encoderValue);
